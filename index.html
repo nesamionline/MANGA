@@ -14,6 +14,7 @@
         body {
             background-color: #1a1a1a;
             color: white;
+            transition: background-color 0.3s, color 0.3s;
         }
         body.light {
             background-color: #ffffff;
@@ -213,6 +214,16 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        /* Тема */
+        .theme-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .theme-icon {
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -284,7 +295,9 @@
         </div>
         <div class="user-panel" id="userPanel">
             <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
-            <button onclick="toggleTheme()">Переключить тему</button>
+            <div class="theme-switcher" onclick="toggleTheme()">
+                <span class="theme-icon">🌙</span> Сменить тему
+            </div>
         </div>
     </nav>
     <main>
@@ -511,10 +524,17 @@
                     <span>${auth.currentUser.nickname}#${auth.currentUser.id}</span>
                     <button class="auth-link" onclick="auth.logout(); updateUI()">Выйти</button>
                     <button class="auth-link" onclick="updateProfileUI()">Личный кабинет</button>
-                    <button onclick="toggleTheme()">Переключить тему</button>
+                    <div class="theme-switcher" onclick="toggleTheme()">
+                        <span class="theme-icon">🌙</span> Сменить тему
+                    </div>
                 `;
             } else {
-                userPanel.innerHTML = '<span class="auth-link" onclick="showAuthModal(\'login\')">Войти</span>';
+                userPanel.innerHTML = `
+                    <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
+                    <div class="theme-switcher" onclick="toggleTheme()">
+                        <span class="theme-icon">🌙</span> Сменить тему
+                    </div>
+                `;
             }
         }
         function updateProfileUI() {
