@@ -338,6 +338,12 @@
                 this.history = [];
                 this.registrationDate = new Date().toLocaleDateString();
             }
+            if (!localStorage.getItem('users')) {
+    const testUser = new User("Admin", "test@gmail.com", "123");
+    testUser.id = 1; // Присваиваем ID
+    testUser.registrationDate = new Date().toLocaleDateString();
+    localStorage.setItem('users', JSON.stringify([testUser]));
+}
         }
         // Система аутентификации
         class AuthSystem {
