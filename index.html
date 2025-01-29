@@ -20,17 +20,22 @@
             background-color: #ffffff;
             color: black;
         }
-        /* Навигация */
+        /* Мобильное меню */
         nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 1rem;
             background-color: #2a2a2a;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        }
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
         }
         .nav-tabs {
             display: flex;
@@ -46,6 +51,30 @@
         }
         .tab-btn.active {
             border-bottom: 2px solid #ff4757;
+        }
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2a2a2a;
+            z-index: 200;
+            padding: 2rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .close-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         /* Основной контент */
         main {
@@ -216,6 +245,9 @@
         }
         /* Тема */
         .theme-switcher {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -223,6 +255,27 @@
         }
         .theme-icon {
             font-size: 1.5rem;
+        }
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            .nav-tabs {
+                display: none;
+            }
+            .nav-tabs.active {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .carousel-item {
+                min-width: 150px;
+            }
+            .rating-item {
+                flex-direction: column;
+                align-items: start;
+            }
         }
     </style>
 </head>
@@ -288,18 +341,22 @@
         </div>
     </div>
     <nav>
-        <div class="nav-tabs">
+        <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+        <div class="nav-tabs" id="navTabs">
             <button class="tab-btn active" data-tab="main">Главное</button>
             <button class="tab-btn" data-tab="ratings">Рейтинги</button>
             <button class="tab-btn" data-tab="catalog">Каталог</button>
         </div>
         <div class="user-panel" id="userPanel">
             <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
-            <div class="theme-switcher" onclick="toggleTheme()">
-                <span class="theme-icon">🌙</span> Сменить тему
-            </div>
         </div>
     </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-menu" onclick="toggleMobileMenu()">×</span>
+        <button class="tab-btn active" data-tab="main" onclick="toggleMobileMenu()">Главное</button>
+        <button class="tab-btn" data-tab="ratings" onclick="toggleMobileMenu()">Рейтинги</button>
+        <button class="tab-btn" data-tab="catalog" onclick="toggleMobileMenu()">Каталог</button>
+    </div>
     <main>
         <div id="main" class="tab-content active">
             <div class="carousel-section">
@@ -326,6 +383,9 @@
             <div class="catalog-grid" id="catalog-grid"></div>
         </div>
     </main>
+    <div class="theme-switcher" onclick="toggleTheme()">
+        <span class="theme-icon">🌙</span> Сменить тему
+    </div>
     <script>
         // Модель пользователя
         class User {
@@ -338,12 +398,6 @@
                 this.history = [];
                 this.registrationDate = new Date().toLocaleDateString();
             }
-            if (!localStorage.getItem('users')) {
-    const testUser = new User("Admin", "test@gmail.com", "123");
-    testUser.id = 1; // Присваиваем ID
-    testUser.registrationDate = new Date().toLocaleDateString();
-    localStorage.setItem('users', JSON.stringify([testUser]));
-}
         }
         // Система аутентификации
         class AuthSystem {
@@ -530,17 +584,9 @@
                     <span>${auth.currentUser.nickname}#${auth.currentUser.id}</span>
                     <button class="auth-link" onclick="auth.logout(); updateUI()">Выйти</button>
                     <button class="auth-link" onclick="updateProfileUI()">Личный кабинет</button>
-                    <div class="theme-switcher" onclick="toggleTheme()">
-                        <span class="theme-icon">🌙</span> Сменить тему
-                    </div>
                 `;
             } else {
-                userPanel.innerHTML = `
-                    <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
-                    <div class="theme-switcher" onclick="toggleTheme()">
-                        <span class="theme-icon">🌙</span> Сменить тему
-                    </div>
-                `;
+                userPanel.innerHTML = '<span class="auth-link" onclick="showAuthModal(\'login\')">Войти</span>';
             }
         }
         function updateProfileUI() {
@@ -575,6 +621,10 @@
             body.classList.toggle('light');
             body.classList.toggle('dark');
 
+            // Обновляем иконку темы
+            const themeIcon = document.querySelector('.theme-icon');
+            themeIcon.textContent = body.classList.contains('light') ? '☀️' : '🌙';
+
             // Сохраняем выбор в cookie
             document.cookie = `theme=${body.classList.contains('light') ? 'light' : 'dark'}; path=/`;
         }
@@ -588,9 +638,16 @@
 
             if (cookies.theme === 'light') {
                 document.body.classList.add('light');
+                document.querySelector('.theme-icon').textContent = '☀️';
             } else {
                 document.body.classList.add('dark');
+                document.querySelector('.theme-icon').textContent = '🌙';
             }
+        }
+        // Мобильное меню
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
         }
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
