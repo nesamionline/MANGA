@@ -399,10 +399,10 @@
     <script>
 class App {
     static async init() {
-    await this.loadData(); // Ждём загрузку данных
+    await this.loadData();
     this.setupRouter();
     this.setupEventListeners();
-    this.applySavedTheme();
+    this.applySavedTheme(); // Применяем сохранённую тему
     this.checkAuth();
 }
 static async loadData() {
@@ -521,11 +521,28 @@ static async loadData() {
         });
     }
     static initCatalog() {
-        const catalogGrid = document.getElementById('catalog-grid');
-        const searchInput = document.getElementById('search-input');
-        const data = this.data['catalog'];
-        if (data) {
-            data.forEach(item => {
+    const catalogGrid = document.getElementById('catalog-grid');
+    const searchInput = document.getElementById('search-input');
+    const data = this.data['catalog'];
+    if (data) {
+        data.forEach(item => {
+            const catalogItem = document.createElement('div');
+            catalogItem.className = 'catalog-item';
+            catalogItem.innerHTML = `
+                <img src="${item.image}">
+                <div class="catalog-info">${item.title}</div>
+            `;
+            catalogItem.addEventListener('click', () => {
+                this.showMangaDetails(item.id);
+            });
+            catalogGrid.appendChild(catalogItem);
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredItems = data.filter(item => item.title.toLowerCase().includes(query));
+            catalogGrid.innerHTML = '';
+            filteredItems.forEach(item => {
                 const catalogItem = document.createElement('div');
                 catalogItem.className = 'catalog-item';
                 catalogItem.innerHTML = `
@@ -537,53 +554,38 @@ static async loadData() {
                 });
                 catalogGrid.appendChild(catalogItem);
             });
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const filteredItems = data.filter(item => item.title.toLowerCase().includes(query));
-                catalogGrid.innerHTML = '';
-                filteredItems.forEach(item => {
-                    const catalogItem = document.createElement('div');
-                    catalogItem.className = 'catalog-item';
-                    catalogItem.innerHTML = `
-                        <img src="${item.image}">
-                        <div class="catalog-info">${item.title}</div>
-                    `;
-                    catalogItem.addEventListener('click', () => {
-                        this.showMangaDetails(item.id);
-                    });
-                    catalogGrid.appendChild(catalogItem);
-                });
-            });
-        }
+        });
     }
-    static initRatings() {
-        const weeklyTop = document.getElementById('weekly-top');
-        const weeklyData = this.data['weekly-top'];
-        if (weeklyData && weeklyTop) {
-            weeklyData.forEach(item => {
-                const ratingItem = document.createElement('div');
-                ratingItem.className = 'rating-item';
-                ratingItem.innerHTML = `
-                    <img src="${item.image}" class="rating-img">
-                    <div>${item.title}</div>
-                `;
-                ratingItem.addEventListener('click', () => {
-                    this.showMangaDetails(item.id);
-                });
-                weeklyTop.appendChild(ratingItem);
+}
+
+static initRatings() {
+    const weeklyTop = document.getElementById('weekly-top');
+    const weeklyData = this.data['weekly-top'];
+    if (weeklyData && weeklyTop) {
+        weeklyData.forEach(item => {
+            const ratingItem = document.createElement('div');
+            ratingItem.className = 'rating-item';
+            ratingItem.innerHTML = `
+                <img src="${item.image}" class="rating-img">
+                <div>${item.title}</div>
+            `;
+            ratingItem.addEventListener('click', () => {
+                this.showMangaDetails(item.id);
             });
-        }
+            weeklyTop.appendChild(ratingItem);
+        });
     }
+}
     static initProfile() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            document.getElementById('profileNickname').textContent = user.nickname;
-            document.getElementById('profileEmail').textContent = user.email;
-            document.getElementById('profileDate').textContent = user.registrationDate;
-            document.getElementById('profileChapters').textContent = user.chaptersRead;
-            document.getElementById('profileLikes').textContent = user.likes;
-        }
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('profileNickname').textContent = user.nickname;
+        document.getElementById('profileEmail').textContent = user.email;
+        document.getElementById('profileDate').textContent = user.registrationDate;
+        document.getElementById('profileChapters').textContent = user.chaptersRead;
+        document.getElementById('profileLikes').textContent = user.likes;
     }
+}
     static initAdminPanel() {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user && user.email === 'akluc6373@gmail.com') {
@@ -623,41 +625,40 @@ static async loadData() {
         }
     }
     static toggleTheme() {
-        document.body.classList.toggle('light');
-        const theme = document.body.classList.contains('light') ? 'light' : 'dark';
-        localStorage.setItem('theme', theme);
-        document.querySelector('.theme-icon').textContent =
-            theme === 'light' ? '☀️' : '🌙';
-    }
-    static applySavedTheme() {
-        const theme = localStorage.getItem('theme') || 'dark';
-        document.body.classList.add(theme);
-        document.querySelector('.theme-icon').textContent =
-            theme === 'light' ? '☀️' : '🌙';
-    }
-    static checkAuth() {
-        const user = JSON.parse(localStorage.getItem('user')) || null;
-        if (user) {
-            document.getElementById('profileTab').style.display = 'block';
-            document.getElementById('authIcon').style.display = 'none';
-            document.getElementById('userNickname').textContent = user.nickname;
+    document.body.classList.toggle('light');
+    const theme = document.body.classList.contains('light') ? 'light' : 'dark';
+    localStorage.setItem('theme', theme);
+    document.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
+}
 
-            if (user.email === 'akluc6373@gmail.com') {
-                const adminBtn = document.createElement('button');
-                adminBtn.className = 'tab-btn';
-                adminBtn.dataset.page = 'admin';
-                adminBtn.textContent = 'Админ';
-                adminBtn.addEventListener('click', () => {
-                    window.location.hash = 'admin';
-                });
-                document.querySelector('.nav-tabs').appendChild(adminBtn);
-            }
-        } else {
-            document.getElementById('profileTab').style.display = 'none';
-            document.getElementById('authIcon').style.display = 'block';
-            document.getElementById('userNickname').textContent = '';
+static applySavedTheme() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.add(theme);
+    document.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
+}
+static checkAuth() {
+    const user = JSON.parse(localStorage.getItem('user')) || null;
+    if (user) {
+        document.getElementById('profileTab').style.display = 'block';
+        document.getElementById('authIcon').style.display = 'none';
+        document.getElementById('userNickname').textContent = user.nickname;
+
+        if (user.email === 'akluc6373@gmail.com') {
+            const adminBtn = document.createElement('button');
+            adminBtn.className = 'tab-btn';
+            adminBtn.dataset.page = 'admin';
+            adminBtn.textContent = 'Админ';
+            adminBtn.addEventListener('click', () => {
+                window.location.hash = 'admin';
+            });
+            document.querySelector('.nav-tabs').appendChild(adminBtn);
         }
+    } else {
+        document.getElementById('profileTab').style.display = 'none';
+        document.getElementById('authIcon').style.display = 'block';
+        document.getElementById('userNickname').textContent = '';
     }
+}
     static handleLogin(event) {
         event.preventDefault();
         const form = document.getElementById('loginForm');
