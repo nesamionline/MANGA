@@ -20,6 +20,7 @@
             background-color: #ffffff;
             color: black;
         }
+        /* Навигация */
         nav {
             display: flex;
             justify-content: space-between;
@@ -67,6 +68,57 @@
         .user-nickname:hover {
             color: #ff4757;
         }
+        /* Модальные окна */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2a2a2a;
+            padding: 2rem;
+            border-radius: 8px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .auth-input {
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+        }
+        .auth-button {
+            padding: 0.8rem;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .auth-links {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .auth-link {
+            color: #ff4757;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        /* Главное меню */
         main {
             margin-top: 4rem;
             padding: 2rem;
@@ -92,14 +144,7 @@
             padding-bottom: 1rem;
         }
         .carousel::-webkit-scrollbar {
-            height: 8px;
-        }
-        .carousel::-webkit-scrollbar-thumb {
-            background: #ff4757;
-            border-radius: 4px;
-        }
-        .carousel::-webkit-scrollbar-track {
-            background: #333;
+            display: none;
         }
         .carousel-item {
             min-width: 200px;
@@ -119,92 +164,22 @@
             margin-top: 0.5rem;
             font-size: 0.9rem;
         }
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        .catalog-item {
+        /* Сейчас читают */
+        .reading-now {
             background: #333;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .catalog-item:hover {
-            transform: scale(1.05);
-        }
-        .catalog-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-        .catalog-info {
             padding: 1rem;
-        }
-        .rating-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .rating-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .rating-img {
-            width: 100px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-        .profile-section {
-            text-align: center;
-        }
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-        }
-        .profile-info {
+            border-radius: 8px;
             margin-bottom: 2rem;
         }
-        .profile-info p {
-            margin: 0.5rem 0;
-        }
-        .manga-details {
-            text-align: center;
-        }
-        .manga-img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
+        .reading-now h2 {
             margin-bottom: 1rem;
+            color: #ff4757;
         }
-        .manga-chapters {
-            display: flex;
-            overflow-x: auto;
-            gap: 1rem;
-            margin-top: 1rem;
+        .reading-now .carousel-item {
+            min-width: 250px;
+            width: 250px;
         }
-        .manga-chapters::-webkit-scrollbar {
-            height: 8px;
-        }
-        .manga-chapters::-webkit-scrollbar-thumb {
-            background: #ff4757;
-            border-radius: 4px;
-        }
-        .manga-chapters::-webkit-scrollbar-track {
-            background: #333;
-        }
-        .chapter-item {
-            padding: 0.5rem 1rem;
-            background: #ff4757;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        /* Уведомления */
         .notification {
             position: fixed;
             bottom: 1rem;
@@ -232,8 +207,50 @@
             90% { opacity: 1; }
             100% { opacity: 0; }
         }
-        /* Стили для модальных окон */
-        .auth-modal {
+        /* Личный кабинет */
+        .profile-section {
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        .profile-info {
+            margin-bottom: 2rem;
+        }
+        .profile-info p {
+            margin: 0.5rem 0;
+        }
+        /* Просмотр тайтла */
+        .manga-details {
+            text-align: center;
+        }
+        .manga-img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .manga-chapters {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .manga-chapters::-webkit-scrollbar {
+            display: none;
+        }
+        .chapter-item {
+            padding: 0.5rem 1rem;
+            background: #ff4757;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Админ панель */
+        .admin-panel {
             display: none;
             position: fixed;
             top: 50%;
@@ -241,62 +258,146 @@
             transform: translate(-50%, -50%);
             background: #2a2a2a;
             padding: 2rem;
-            border-radius: 10px;
+            border-radius: 8px;
             z-index: 1000;
+            width: 90%;
+            max-width: 600px;
         }
-        .auth-modal.active {
+        .admin-panel.active {
             display: block;
         }
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .admin-panel table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .auth-input {
+        .admin-panel th, .admin-panel td {
             padding: 0.5rem;
-            border-radius: 5px;
             border: 1px solid #444;
-            background: #333;
-            color: white;
         }
-        .auth-button {
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: none;
+        .admin-panel button {
+            padding: 0.5rem 1rem;
             background: #ff4757;
             color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
-        .auth-links {
+        /* Фильтры в каталоге */
+        .filters {
             display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-        .auth-link {
-            color: #ff4757;
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-btn.active {
+            background: #ff4757;
         }
     </style>
 </head>
 <body>
+    <!-- Модальные окна -->
+    <div id="loginModal" class="auth-modal">
+        <span class="close-btn" onclick="closeAllModals()">×</span>
+        <form class="auth-form" id="loginForm">
+            <h2>Вход</h2>
+            <input type="email" class="auth-input" placeholder="Email" required>
+            <input type="password" class="auth-input" placeholder="Пароль" required>
+            <button type="submit" class="auth-button">Войти</button>
+            <div class="auth-links">
+                <span class="auth-link" onclick="showAuthModal('register')">Регистрация</span> | 
+                <span class="auth-link" onclick="showAuthModal('forgot')">Забыли пароль?</span>
+            </div>
+        </form>
+    </div>
+    <div id="registerModal" class="auth-modal">
+        <span class="close-btn" onclick="closeAllModals()">×</span>
+        <form class="auth-form" id="registerForm">
+            <h2>Регистрация</h2>
+            <input type="text" class="auth-input" placeholder="Никнейм" id="nicknameInput" required>
+            <input type="email" class="auth-input" placeholder="Email" required>
+            <input type="password" class="auth-input" placeholder="Пароль" required>
+            <input type="password" class="auth-input" placeholder="Повторите пароль" required>
+            <button type="submit" class="auth-button">Зарегистрироваться</button>
+            <div class="auth-links">
+                <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
+            </div>
+        </form>
+    </div>
+    <div id="forgotModal" class="auth-modal">
+        <span class="close-btn" onclick="closeAllModals()">×</span>
+        <form class="auth-form" id="forgotForm">
+            <h2>Восстановление пароля</h2>
+            <input type="email" class="auth-input" placeholder="Email" required>
+            <button type="submit" class="auth-button">Отправить ссылку</button>
+            <div class="auth-links">
+                <span class="auth-link" onclick="showAuthModal('login')">Войти</span>
+            </div>
+        </form>
+    </div>
+    <!-- Админ панель -->
+    <div id="adminPanel" class="admin-panel">
+        <span class="close-btn" onclick="document.getElementById('adminPanel').classList.remove('active')">×</span>
+        <h2>Админ панель</h2>
+        <form id="addUserForm">
+            <h3>Добавить пользователя</h3>
+            <input type="text" class="auth-input" placeholder="Никнейм" id="adminNickname" required>
+            <input type="email" class="auth-input" placeholder="Email" id="adminEmail" required>
+            <input type="password" class="auth-input" placeholder="Пароль" id="adminPassword" required>
+            <button type="submit" class="auth-button">Добавить</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Никнейм</th>
+                    <th>Email</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody id="adminTableBody">
+            </tbody>
+        </table>
+    </div>
+    <!-- Меню добавления тайтлов -->
+    <div id="adminAddManga" class="admin-panel">
+        <span class="close-btn" onclick="document.getElementById('adminAddManga').classList.remove('active')">×</span>
+        <h2>Добавить тайтл</h2>
+        <form id="addMangaForm">
+            <input type="text" class="auth-input" placeholder="Название" id="mangaTitle" required>
+            <input type="url" class="auth-input" placeholder="Ссылка на обложку" id="mangaImage" required>
+            <textarea class="auth-input" placeholder="Описание" id="mangaDescription" required></textarea>
+            <input type="text" class="auth-input" placeholder="Жанры (через запятую)" id="mangaGenres" required>
+            <input type="text" class="auth-input" placeholder="Теги (через запятую)" id="mangaTags" required>
+            <button type="submit" class="auth-button">Добавить</button>
+        </form>
+    </div>
+    <!-- Навигация -->
     <nav>
         <div class="nav-tabs">
-            <button class="tab-btn active" data-page="main">Главное</button>
-            <button class="tab-btn" data-page="ratings">Рейтинги</button>
-            <button class="tab-btn" data-page="catalog">Каталог</button>
-            <button class="tab-btn" data-page="profile" id="profileTab" style="display: none;">Личный кабинет</button>
+            <button class="tab-btn active" data-tab="main">Главное</button>
+            <button class="tab-btn" data-tab="ratings">Рейтинги</button>
+            <button class="tab-btn" data-tab="catalog">Каталог</button>
+            <button class="tab-btn" data-tab="profile" style="display: none;" id="profileTab">Личный кабинет</button>
+            <button class="tab-btn" data-tab="admin" style="display: none;" id="adminTab">Админ панель</button>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <div class="theme-switcher" onclick="App.toggleTheme()">
+            <div class="theme-switcher" onclick="toggleTheme()">
                 <span class="theme-icon">🌙</span>
             </div>
-            <span class="auth-icon" id="authIcon" onclick="App.showAuthModal('login')">🔑</span>
-            <span class="user-nickname" id="userNickname"></span>
+            <span class="auth-icon" onclick="showAuthModal('login')" id="authIcon">🔑</span>
+            <span class="user-nickname" onclick="openProfile()" id="userNickname"></span>
         </div>
     </nav>
-    <main id="app"></main>
-    <template id="main-page">
-        <div class="tab-content active">
+    <main>
+        <div id="main" class="tab-content active">
             <div class="carousel-section reading-now">
                 <h2 class="carousel-title">Сейчас читают</h2>
                 <div class="carousel" id="reading-now-carousel"></div>
@@ -306,492 +407,963 @@
                 <div class="carousel" id="manhwa-carousel"></div>
             </div>
             <div class="carousel-section">
-                <h2 class="carousel-title">Манга</h2>
-                <div class="carousel" id="manga-carousel"></div>
-            </div>
-            <div class="carousel-section">
                 <h2 class="carousel-title">Маньхуа</h2>
                 <div class="carousel" id="manhua-carousel"></div>
             </div>
+            <div class="carousel-section">
+                <h2 class="carousel-title">Манга</h2>
+                <div class="carousel" id="manga-carousel"></div>
+            </div>
+            <div class="updated-chapters">
+                <h2>Обновленные главы</h2>
+                <div id="updated-chapters-list"></div>
+            </div>
         </div>
-    </template>
-    <template id="ratings-page">
-        <div class="tab-content">
+        <div id="ratings" class="tab-content">
             <h2>Топ 10 за неделю</h2>
             <div class="rating-list" id="weekly-top"></div>
+            <h2 style="margin-top: 2rem">Топ 20 за месяц</h2>
+            <div class="rating-list" id="monthly-top"></div>
         </div>
-    </template>
-    <template id="catalog-page">
-        <div class="tab-content">
+        <div id="catalog" class="tab-content">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all" onclick="filterCatalog('all')">Все</button>
+                <button class="filter-btn" data-filter="action" onclick="filterCatalog('action')">Action</button>
+                <button class="filter-btn" data-filter="adventure" onclick="filterCatalog('adventure')">Adventure</button>
+                <button class="filter-btn" data-filter="romance" onclick="filterCatalog('romance')">Romance</button>
+            </div>
             <input type="text" class="search-box" placeholder="Поиск по названию..." id="search-input">
             <div class="catalog-grid" id="catalog-grid"></div>
         </div>
-    </template>
-    <template id="profile-page">
-        <div class="tab-content">
+        <div id="profile" class="tab-content">
             <div class="profile-section">
-                <img src="https://picsum.photos/100" alt="Аватар" class="profile-avatar">
+                <img src="https://via.placeholder.com/100" alt="Аватар" class="profile-avatar">
                 <div class="profile-info">
                     <h2 id="profileNickname">Никнейм#1234</h2>
-                    <p>Email: <span id="profileEmail"></span></p>
-                    <p>Дата регистрации: <span id="profileDate"></span></p>
-                    <p>Прочитанные главы: <span id="profileChapters"></span></p>
-                    <p>Понравившиеся тайтлы: <span id="profileLikes"></span></p>
-                    <button onclick="App.logout()">Выйти из аккаунта</button>
+                    <p>Дата регистрации: <span id="profileRegistrationDate">01.01.2023</span></p>
+                    <p>Прочитанные главы: <span id="profileChaptersRead">50</span></p>
+                    <p>Лайки: <span id="profileLikes">10</span></p>
                 </div>
             </div>
         </div>
-    </template>
-    <template id="manga-details-page">
-        <div class="manga-details">
-            <img id="mangaImage" class="manga-img">
-            <h2 id="mangaTitle"></h2>
-            <div id="mangaDescription"></div>
-            <div class="manga-chapters" id="mangaChapters"></div>
+        <div id="admin" class="tab-content">
+            <div id="adminPanelContent">
+                <button class="auth-link" onclick="document.getElementById('adminPanel').classList.add('active')">Управление пользователями</button>
+                <button class="auth-link" onclick="document.getElementById('adminAddManga').classList.add('active')">Добавить тайтл</button>
+            </div>
         </div>
-    </template>
-    <template id="admin-page">
-        <div class="tab-content">
-            <h2>Панель администратора</h2>
-            <button onclick="App.logout()">Выйти</button>
-        </div>
-    </template>
-    <div id="loginModal" class="auth-modal">
-        <span class="close-btn" onclick="App.closeAllModals()">×</span>
-        <form class="auth-form" id="loginForm">
-            <h2>Вход</h2>
-            <input type="email" class="auth-input" placeholder="Email" required>
-            <input type="password" class="auth-input" placeholder="Пароль" required>
-            <button type="submit" class="auth-button">Войти</button>
-            <div class="auth-links">
-                <span class="auth-link" onclick="App.showAuthModal('register')">Регистрация</span> | 
-                <span class="auth-link" onclick="App.showAuthModal('forgot')">Забыли пароль?</span>
-            </div>
-        </form>
-    </div>
-    <div id="registerModal" class="auth-modal">
-        <span class="close-btn" onclick="App.closeAllModals()">×</span>
-        <form class="auth-form" id="registerForm">
-            <h2>Регистрация</h2>
-            <input type="text" id="nicknameInput" class="auth-input" placeholder="Никнейм" required>
-            <input type="email" class="auth-input" placeholder="Email" required>
-            <input type="password" class="auth-input" placeholder="Пароль" required>
-            <input type="password" class="auth-input" placeholder="Повторите пароль" required>
-            <button type="submit" class="auth-button">Зарегистрироваться</button>
-            <div class="auth-links">
-                <span class="auth-link" onclick="App.showAuthModal('login')">Вход</span> | 
-                <span class="auth-link" onclick="App.showAuthModal('forgot')">Забыли пароль?</span>
-            </div>
-        </form>
-    </div>
-    <div id="forgotModal" class="auth-modal">
-        <span class="close-btn" onclick="App.closeAllModals()">×</span>
-        <form class="auth-form" id="forgotForm">
-            <h2>Восстановление пароля</h2>
-            <input type="email" class="auth-input" placeholder="Email" required>
-            <button type="submit" class="auth-button">Отправить</button>
-            <div class="auth-links">
-                <span class="auth-link" onclick="App.showAuthModal('login')">Вход</span> | 
-                <span class="auth-link" onclick="App.showAuthModal('register')">Регистрация</span>
-            </div>
-        </form>
-    </div>
+    </main>
     <script>
-class App {
-    static async init() {
-    await this.loadData();
-    this.setupRouter();
-    this.setupEventListeners();
-    this.applySavedTheme(); // Применяем сохранённую тему
-    this.checkAuth();
-}
-static async loadData() {
-    try {
-        // Загрузка данных (mock или API)
-        this.data = {
-            'reading-now-carousel': [
-                { image: 'https://picsum.photos/200/300', title: 'Читают сейчас 1', id: 1 },
-                { image: 'https://picsum.photos/200/300', title: 'Читают сейчас 2', id: 2 }
-            ],
-            'manhwa-carousel': [
-                { image: 'https://picsum.photos/200/300', title: 'Манхва 1', id: 3 },
-                { image: 'https://picsum.photos/200/300', title: 'Манхва 2', id: 4 }
-            ],
-            'manga-carousel': [
-                { image: 'https://picsum.photos/200/300', title: 'Манга 1', id: 5 },
-                { image: 'https://picsum.photos/200/300', title: 'Манга 2', id: 6 }
-            ],
-            'manhua-carousel': [
-                { image: 'https://picsum.photos/200/300', title: 'Маньхуа 1', id: 7 },
-                { image: 'https://picsum.photos/200/300', title: 'Маньхуа 2', id: 8 }
-            ],
-            'weekly-top': [
-                { image: 'https://picsum.photos/100/150', title: 'Топ 1', id: 9 },
-                { image: 'https://picsum.photos/100/150', title: 'Топ 2', id: 10 }
-            ],
-            'catalog': [
-                { image: 'https://picsum.photos/200/300', title: 'Манга 1', id: 11 },
-                { image: 'https://picsum.photos/200/300', title: 'Манга 2', id: 12 }
-            ],
-        };
-        console.log('Данные загружены:', this.data); // Для отладки
-    } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-    }
-}
-    static pages = {
-        main: '#main-page',
-        ratings: '#ratings-page',
-        catalog: '#catalog-page',
-        profile: '#profile-page',
-        manga: '#manga-details-page',
-        admin: '#admin-page'
-    };
-    static setupRouter() {
-        window.addEventListener('popstate', () => this.loadPage());
-        window.addEventListener('hashchange', () => this.loadPage());
-        this.loadPage(); // Убедитесь, что loadPage вызывается корректно
-    }
-    static async loadPage() {
-        const pageName = window.location.hash.substring(1) || 'main';
-        await this.renderPage(pageName); // Ожидаем завершения рендеринга страницы
-        this.updateNav(pageName);
-    }
-    static async renderPage(pageName) {
-    const template = document.querySelector(this.pages[pageName]);
-    if (!template) return this.renderError();
-
-    const app = document.getElementById('app');
-    app.innerHTML = '';
-
-    if (!this.data) {
-        app.innerHTML = '<p>Ошибка: данные не загружены. Попробуйте позже.</p>';
-        return;
-    }
-
-    app.appendChild(template.content.cloneNode(true));
-
-    switch (pageName) {
-        case 'main':
-            await this.initCarousels();
-            break;
-        case 'catalog':
-            this.initCatalog();
-            break;
-        case 'ratings':
-            this.initRatings();
-            break;
-        case 'profile':
-            this.initProfile();
-            break;
-        case 'manga':
-            this.initMangaDetails();
-            break;
-        case 'admin':
-            this.initAdminPanel();
-            break;
-    }
-}
-    static updateNav(pageName) {
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.page === pageName);
-        });
-    }
-    static async initCarousels() {
-        const carousels = document.querySelectorAll('.carousel');
-        carousels.forEach(carousel => {
-            const carouselId = carousel.id;
-            const data = this.data?.[carouselId]; // Используем опциональную цепочку
-            if (data) {
-                data.forEach(item => {
-                    const carouselItem = document.createElement('div');
-                    carouselItem.className = 'carousel-item';
-                    carouselItem.innerHTML = `
-                        <img src="${item.image}" class="carousel-img">
-                        <div class="carousel-info">${item.title}</div>
-                    `;
-                    carouselItem.addEventListener('click', () => {
-                        this.showMangaDetails(item.id);
-                    });
-                    carousel.appendChild(carouselItem);
-                });
-            } else {
-                console.error(`Данные для карусели "${carouselId}" не найдены.`);
+        // Модель пользователя
+        class User {
+            constructor(nickname, email, password, isAdmin = false) {
+                this.nickname = nickname;
+                this.email = email;
+                this.password = password;
+                this.id = User.nextId++;
+                this.favorites = [];
+                this.history = [];
+                this.comments = [];
+                this.registrationDate = new Date().toLocaleDateString();
+                this.isAdmin = isAdmin; // Поле для определения администратора
             }
-        });
-    }
-    static initCatalog() {
-    const catalogGrid = document.getElementById('catalog-grid');
-    const searchInput = document.getElementById('search-input');
-    const data = this.data['catalog'];
-    if (data) {
-        data.forEach(item => {
-            const catalogItem = document.createElement('div');
-            catalogItem.className = 'catalog-item';
-            catalogItem.innerHTML = `
-                <img src="${item.image}">
-                <div class="catalog-info">${item.title}</div>
-            `;
-            catalogItem.addEventListener('click', () => {
-                this.showMangaDetails(item.id);
-            });
-            catalogGrid.appendChild(catalogItem);
-        });
+        }
+        User.nextId = 1; // Начальный ID для пользователей
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filteredItems = data.filter(item => item.title.toLowerCase().includes(query));
-            catalogGrid.innerHTML = '';
-            filteredItems.forEach(item => {
-                const catalogItem = document.createElement('div');
-                catalogItem.className = 'catalog-item';
-                catalogItem.innerHTML = `
-                    <img src="${item.image}">
-                    <div class="catalog-info">${item.title}</div>
-                `;
-                catalogItem.addEventListener('click', () => {
-                    this.showMangaDetails(item.id);
-                });
-                catalogGrid.appendChild(catalogItem);
-            });
-        });
-    }
-}
+        // Система аутентификации
+        class AuthSystem {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('users')) || [];
+                this.currentUser = null;
+            }
 
-static initRatings() {
-    const weeklyTop = document.getElementById('weekly-top');
-    const weeklyData = this.data['weekly-top'];
-    if (weeklyData && weeklyTop) {
-        weeklyData.forEach(item => {
-            const ratingItem = document.createElement('div');
-            ratingItem.className = 'rating-item';
-            ratingItem.innerHTML = `
-                <img src="${item.image}" class="rating-img">
-                <div>${item.title}</div>
-            `;
-            ratingItem.addEventListener('click', () => {
-                this.showMangaDetails(item.id);
-            });
-            weeklyTop.appendChild(ratingItem);
-        });
-    }
-}
-    static initProfile() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-        document.getElementById('profileNickname').textContent = user.nickname;
-        document.getElementById('profileEmail').textContent = user.email;
-        document.getElementById('profileDate').textContent = user.registrationDate;
-        document.getElementById('profileChapters').textContent = user.chaptersRead;
-        document.getElementById('profileLikes').textContent = user.likes;
-    }
-}
-    static initAdminPanel() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.email === 'akluc6373@gmail.com') {
-            const adminPanel = document.createElement('div');
-            adminPanel.innerHTML = `
-                <h2>Панель администратора</h2>
-                <button onclick="App.logout()">Выйти</button>
-            `;
-            document.getElementById('app').appendChild(adminPanel);
+            register(nickname, email, password) {
+                if (this.users.some(u => u.email === email)) return false;
+
+                const newUser = new User(nickname, email, password);
+                this.users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(this.users));
+                return true;
+            }
+
+            login(email, password) {
+                const user = this.users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    this.currentUser = user;
+                    return true;
+                }
+                return false;
+            }
+
+            logout() {
+                this.currentUser = null;
+            }
+        }
+        const auth = new AuthSystem();
+
+        // Добавление администратора по умолчанию
+        if (!auth.users.some(user => user.email === 'akluc6373@gmail.com')) {
+            auth.register('admin', 'akluc6373@gmail.com', '123', true); // Устанавливаем isAdmin = true
         } else {
-            window.location.hash = 'main';
-        }
-    }
-    static showMangaDetails(mangaId) {
-        const manga = this.data['catalog'].find(item => item.id === mangaId);
-        if (manga) {
-            localStorage.setItem('manga', JSON.stringify(manga));
-            window.location.hash = 'manga';
-        }
-    }
-    static initMangaDetails() {
-        const manga = JSON.parse(localStorage.getItem('manga'));
-        if (manga) {
-            document.getElementById('mangaImage').src = manga.image;
-            document.getElementById('mangaTitle').textContent = manga.title;
-            document.getElementById('mangaDescription').textContent = 'Описание манги...';
-            const chapters = document.getElementById('mangaChapters');
-            for (let i = 1; i <= 10; i++) {
-                const chapterItem = document.createElement('div');
-                chapterItem.className = 'chapter-item';
-                chapterItem.textContent = `Глава ${i}`;
-                chapterItem.addEventListener('click', () => {
-                    alert(`Вы открыли главу ${i}`);
-                });
-                chapters.appendChild(chapterItem);
+            // Если пользователь уже существует, проверяем его права администратора
+            const adminUser = auth.users.find(user => user.email === 'akluc6373@gmail.com');
+            if (adminUser) {
+                adminUser.isAdmin = true;
+                localStorage.setItem('users', JSON.stringify(auth.users));
             }
         }
-    }
-    static toggleTheme() {
-    document.body.classList.toggle('light');
-    const theme = document.body.classList.contains('light') ? 'light' : 'dark';
-    localStorage.setItem('theme', theme);
-    document.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
-}
 
-static applySavedTheme() {
-    const theme = localStorage.getItem('theme') || 'dark';
-    document.body.classList.add(theme);
-    document.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
-}
-static checkAuth() {
-    const user = JSON.parse(localStorage.getItem('user')) || null;
-    if (user) {
-        document.getElementById('profileTab').style.display = 'block';
-        document.getElementById('authIcon').style.display = 'none';
-        document.getElementById('userNickname').textContent = user.nickname;
+        // Генерация данных
+        const generateData = (type, count) => {
+            return Array.from({ length: count }, (_, i) => ({
+                title: `${type} ${i + 1}`,
+                image: `https://source.unsplash.com/random/200x300?manga,${type},${i}`,
+                rating: (Math.random() * 5 + 5).toFixed(1),
+                likes: Math.floor(Math.random() * 10000),
+                description: `Описание ${type} ${i + 1}. Lorem ipsum dolor sit amet.`,
+                genres: ['Action', 'Adventure', 'Romance'],
+                tags: ['Shonen', 'Fantasy', 'School'],
+                chapters: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, (_, i) => `Chapter ${i + 1}`)
+            }));
+        };
 
-        if (user.email === 'akluc6373@gmail.com') {
-            const adminBtn = document.createElement('button');
-            adminBtn.className = 'tab-btn';
-            adminBtn.dataset.page = 'admin';
-            adminBtn.textContent = 'Админ';
-            adminBtn.addEventListener('click', () => {
-                window.location.hash = 'admin';
+        const realTitles = [
+            { title: 'One Piece', image: 'https://via.placeholder.com/200x300?text=One+Piece', rating: '9.5', likes: '100k', description: 'Пиратская история о поиске легендарного сокровища.', genres: ['Action', 'Adventure'], tags: ['Shonen'] },
+            { title: 'Attack on Titan', image: 'https://via.placeholder.com/200x300?text=Attack+on+Titan', rating: '9.3', likes: '95k', description: 'Борьба человечества против титанов.', genres: ['Action', 'Drama'], tags: ['Dark Fantasy'] },
+            { title: 'Naruto', image: 'https://via.placeholder.com/200x300?text=Naruto', rating: '9.2', likes: '90k', description: 'История юного ниндзя.', genres: ['Action', 'Adventure'], tags: ['Shonen'] },
+            { title: 'Demon Slayer: Kimetsu no Yaiba', image: 'https://via.placeholder.com/200x300?text=Demon+Slayer', rating: '9.4', likes: '92k', description: 'История о бойце демонов.', genres: ['Action', 'Horror'], tags: ['Seinen'] },
+            { title: 'Bleach', image: 'https://via.placeholder.com/200x300?text=Bleach', rating: '9.1', likes: '88k', description: 'История о студенте духовного университета.', genres: ['Action', 'Supernatural'], tags: ['Shonen'] },
+            { title: 'Jujutsu Kaisen', image: 'https://via.placeholder.com/200x300?text=Jujutsu+Kaisen', rating: '9.0', likes: '85k', description: 'История о бойце техники яйцурикесен.', genres: ['Action', 'Supernatural'], tags: ['Seinen'] },
+            { title: 'My Hero Academia', image: 'https://via.placeholder.com/200x300?text=My+Hero+Academia', rating: '8.9', likes: '83k', description: 'История о героях суперспособностей.', genres: ['Action', 'Adventure'], tags: ['Shonen'] },
+            { title: 'The Promised Neverland', image: 'https://via.placeholder.com/200x300?text=The+Promised+Neverland', rating: '8.8', likes: '80k', description: 'История о детском доме и его жителях.', genres: ['Horror', 'Drama'], tags: ['Seinen'] },
+            { title: 'Solo Leveling', image: 'https://via.placeholder.com/200x300?text=Solo+Leveling', rating: '8.7', likes: '78k', description: 'История о герое, который одинок в мире монстров.', genres: ['Action', 'Adventure'], tags: ['Shonen'] },
+            { title: 'Vagabond', image: 'https://via.placeholder.com/200x300?text=Vagabond', rating: '8.6', likes: '75k', description: 'История о путешественнике и его приключениях.', genres: ['Action', 'Drama'], tags: ['Seinen'] }
+        ];
+
+        const data = {
+            manhwa: generateData('Manhwa', 10),
+            manhua: generateData('Manhua', 10),
+            manga: realTitles,
+            catalog: realTitles
+        };
+
+        // Инициализация каруселей
+        function initInfiniteCarousel(containerId, items) {
+            const container = document.getElementById(containerId);
+            const cloneItems = items => items.map(item => {
+                const div = document.createElement('div');
+                div.className = 'carousel-item';
+                div.innerHTML = `
+                    <img src="${item.image}" class="carousel-img">
+                    <div class="carousel-info">
+                        <div>Оценка: ${item.rating}</div>
+                        <div>Лайки: ${item.likes}</div>
+                    </div>
+                `;
+                div.addEventListener('click', () => openMangaDetails(item));
+                return div;
             });
-            document.querySelector('.nav-tabs').appendChild(adminBtn);
-        }
-    } else {
-        document.getElementById('profileTab').style.display = 'none';
-        document.getElementById('authIcon').style.display = 'block';
-        document.getElementById('userNickname').textContent = '';
-    }
-}
-    static handleLogin(event) {
-        event.preventDefault();
-        const form = document.getElementById('loginForm');
-        const email = form.querySelector('input[type="email"]').value;
-        const password = form.querySelector('input[type="password"]').value;
+            const elements = cloneItems(items);
+            const clonedElements = cloneItems(items);
+            container.append(...elements, ...clonedElements);
+            let isScrolling = false;
 
-        if (email === 'akluc6373@gmail.com' && password === '123') {
-            const adminUser = {
-                id: 1,
-                nickname: 'admin',
-                email: 'akluc6373@gmail.com',
-                password: '123',
-                registrationDate: '01.01.2023',
-                chaptersRead: 0,
-                likes: 0
-            };
-            localStorage.setItem('user', JSON.stringify(adminUser));
-            this.closeAllModals();
-            this.showNotification('Вход выполнен успешно!', 'success');
-            form.reset();
-            this.checkAuth();
-            return;
+            container.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    const scrollWidth = container.scrollWidth / 2;
+                    if (container.scrollLeft >= scrollWidth) {
+                        isScrolling = true;
+                        container.scrollLeft -= scrollWidth;
+                        isScrolling = false;
+                    } else if (container.scrollLeft <= 0) {
+                        isScrolling = true;
+                        container.scrollLeft += scrollWidth;
+                        isScrolling = false;
+                    }
+                }
+            });
         }
 
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            const user = JSON.parse(storedUser);
-            if (user.email === email && user.password === password) {
-                this.closeAllModals();
-                this.showNotification('Вход выполнен успешно!', 'success');
-                form.reset();
-                this.checkAuth();
+        // Инициализация рейтингов
+        const initRatings = (containerId, items) => {
+            const container = document.getElementById(containerId);
+            items.forEach((item, i) => {
+                const html = `
+                    <div class="rating-item">
+                        <span style="margin-right: 1rem">${i + 1}.</span>
+                        <img src="${item.image}" class="rating-img">
+                        <div>
+                            <h3>${item.title}</h3>
+                            <div>Рейтинг: ${item.rating}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        };
+
+        // Инициализация каталога
+        const initCatalog = () => {
+            const container = document.getElementById('catalog-grid');
+            data.catalog.forEach(item => {
+                const html = `
+                    <div class="catalog-item" data-title="${item.title.toLowerCase()}" data-genres="${item.genres.join(',')}" data-tags="${item.tags.join(',')}">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="catalog-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.description}</p>
+                        </div>
+                    </div>
+                `;
+                const div = document.createElement('div');
+                div.innerHTML = html;
+                div.querySelector('.catalog-item').addEventListener('click', () => openMangaDetails(item));
+                container.appendChild(div);
+            });
+        };
+
+        // Поиск в каталоге
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.catalog-item').forEach(item => {
+                const title = item.dataset.title.toLowerCase();
+                item.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        // Фильтры в каталоге
+        function filterCatalog(genre) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.filter-btn[data-filter="${genre}"]`).classList.add('active');
+
+            document.querySelectorAll('.catalog-item').forEach(item => {
+                const genres = item.dataset.genres.split(',');
+                item.style.display = genre === 'all' || genres.includes(genre) ? 'block' : 'none';
+            });
+        }
+
+        // Переключение вкладок
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Обработчики форм
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            if (auth.login(email, password)) {
+                updateUI();
+                closeAllModals();
+                showNotification('Успешный вход!', 'success');
+            } else {
+                showNotification('Неверные данные!', 'error');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('nicknameInput').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            const confirm = this.querySelector('input[type="password"]:last-child').value;
+            if (password !== confirm) {
+                showNotification('Пароли не совпадают!', 'error');
                 return;
             }
+            if (auth.register(nickname, email, password)) {
+                showNotification('Регистрация успешна!', 'success');
+                showAuthModal('login');
+            } else {
+                showNotification('Пользователь уже существует!', 'error');
+            }
+        });
+
+        document.getElementById('forgotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Ссылка отправлена на email!', 'success');
+            closeAllModals();
+        });
+
+        // Открытие тайтла
+        function openMangaDetails(manga) {
+            const mangaPage = window.open('', '_blank');
+            mangaPage.document.write(`
+                <!DOCTYPE html>
+                <html lang="ru">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${manga.title}</title>
+                    <style>
+                        body {
+                            background-color: #1a1a1a;
+                            color: white;
+                            font-family: Arial, sans-serif;
+                            padding: 2rem;
+                            transition: background-color 0.3s, color 0.3s;
+                        }
+                        body.light {
+                            background-color: #ffffff;
+                            color: black;
+                        }
+                        .manga-details {
+                            text-align: center;
+                        }
+                        .manga-img {
+                            width: 100%;
+                            max-width: 400px;
+                            border-radius: 10px;
+                            margin-bottom: 1rem;
+                        }
+                        .manga-info {
+                            margin-bottom: 2rem;
+                        }
+                        .manga-chapters {
+                            display: flex;
+                            overflow-x: auto;
+                            gap: 1rem;
+                            margin-top: 1rem;
+                        }
+                        .manga-chapters::-webkit-scrollbar {
+                            display: none;
+                        }
+                        .chapter-item {
+                            padding: 0.5rem 1rem;
+                            background: #ff4757;
+                            color: white;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        }
+                        .manga-menu {
+                            display: flex;
+                            justify-content: center;
+                            gap: 2rem;
+                            margin-bottom: 2rem;
+                        }
+                        .manga-menu button {
+                            padding: 0.5rem 1rem;
+                            background: #ff4757;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="manga-menu">
+                        <button class="tab-btn" data-tab="main" onclick="window.location.href='#main'">Главное</button>
+                        <button class="tab-btn" data-tab="ratings" onclick="window.location.href='#ratings'">Рейтинги</button>
+                        <button class="tab-btn" data-tab="catalog" onclick="window.location.href='#catalog'">Каталог</button>
+                    </div>
+                    <div class="manga-details">
+                        <img src="${manga.image}" alt="Обложка" class="manga-img">
+                        <h2>${manga.title}</h2>
+                        <div class="manga-info">
+                            <p><strong>Описание:</strong> ${manga.description || 'Описание отсутствует'}</p>
+                            <p><strong>Жанры:</strong> ${Array.isArray(manga.genres) ? manga.genres.join(', ') : 'Не указаны'}</p>
+                            <p><strong>Теги:</strong> ${Array.isArray(manga.tags) ? manga.tags.join(', ') : 'Не указаны'}</p>
+                        </div>
+                        <div class="manga-chapters">
+                            ${manga.chapters.map(chapter => `
+                                <div class="chapter-item" onclick="alert('Читаю ${chapter}')">${chapter}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+
+            // Закрытие документа
+            mangaPage.document.close();
+
+            // Применение темы
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            mangaPage.document.body.classList.add(savedTheme);
         }
-        this.showNotification('Неверный email или пароль.', 'error');
-        form.reset();
-    }
-    static handleRegister(event) {
-        event.preventDefault();
-        const form = document.getElementById('registerForm');
-        const nickname = document.getElementById('nicknameInput').value;
-        const email = form.querySelector('input[type="email"]').value;
-        const password = form.querySelector('input[type="password"]:nth-child(3)').value;
-        const confirmPassword = form.querySelector('input[type="password"]:nth-child(4)').value;
-        if (password !== confirmPassword) {
-            this.showNotification('Пароли не совпадают.', 'error');
-            return;
+
+        // Обновление интерфейса
+        function updateUI() {
+            const userPanel = document.getElementById('userNickname');
+            const profileTab = document.getElementById('profileTab');
+            const adminTab = document.getElementById('adminTab');
+            const authIcon = document.getElementById('authIcon');
+            if (auth.currentUser) {
+                userPanel.textContent = `${auth.currentUser.nickname}#${auth.currentUser.id}`;
+                profileTab.style.display = 'block';
+                if (auth.currentUser.isAdmin) {
+                    adminTab.style.display = 'block'; // Показать админ панель
+                }
+                authIcon.textContent = '🚪';
+                authIcon.onclick = () => {
+                    auth.logout();
+                    deleteCookie('email');
+                    deleteCookie('password');
+                    updateUI();
+                    showNotification('Вы вышли из аккаунта!', 'success');
+                };
+            } else {
+                userPanel.textContent = '';
+                profileTab.style.display = 'none';
+                adminTab.style.display = 'none'; // Скрыть админ панель
+                authIcon.textContent = '🔑';
+                authIcon.onclick = () => showAuthModal('login');
+            }
         }
-        const user = {
-            id: Date.now(),
-            nickname,
-            email,
-            password,
-            registrationDate: new Date().toLocaleDateString(),
-            chaptersRead: 0,
-            likes: 0
+
+        // Открытие личного кабинета
+        function openProfile() {
+            if (!auth.currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="profile"]').classList.add('active');
+            document.getElementById('profile').classList.add('active');
+            updateProfileUI();
+        }
+
+        // Обновление данных личного кабинета
+        function updateProfileUI() {
+            document.getElementById('profileNickname').textContent = `${auth.currentUser.nickname}#${auth.currentUser.id}`;
+            document.getElementById('profileRegistrationDate').textContent = auth.currentUser.registrationDate;
+            document.getElementById('profileChaptersRead').textContent = auth.currentUser.history.length;
+            document.getElementById('profileLikes').textContent = auth.currentUser.favorites.length;
+        }
+
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light');
+            body.classList.toggle('dark');
+            const themeIcon = document.querySelector('.theme-icon');
+            themeIcon.textContent = body.classList.contains('light') ? '☀️' : '🌙';
+            localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+        }
+
+        // Применяем сохранённую тему из localStorage
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light');
+                document.querySelector('.theme-icon').textContent = '☀️';
+            } else {
+                document.body.classList.add('dark');
+                document.querySelector('.theme-icon').textContent = '🌙';
+            }
+        }
+
+        // Закрытие всех модальных окон
+        function closeAllModals() {
+            document.querySelectorAll('.auth-modal').forEach(modal => modal.style.display = 'none');
+        }
+
+        // Показать модальное окно
+        function showAuthModal(type) {
+            closeAllModals();
+            document.getElementById(`${type}Modal`).style.display = 'block';
+        }
+
+        // Добавление администратора по умолчанию
+        if (!auth.users.some(user => user.email === 'akluc6373@gmail.com')) {
+            auth.register('admin', 'akluc6373@gmail.com', '123', true); // Устанавливаем isAdmin = true
+        } else {
+            const adminUser = auth.users.find(user => user.email === 'akluc6373@gmail.com');
+            if (adminUser && !adminUser.isAdmin) {
+                adminUser.isAdmin = true; // Если пользователь существует, но не имеет прав админа, обновляем его права
+                localStorage.setItem('users', JSON.stringify(auth.users));
+            }
+        }
+
+        // Обновление таблицы пользователей в панели управления
+        function updateAdminPanel() {
+            const adminTableBody = document.getElementById('adminTableBody');
+            adminTableBody.innerHTML = '';
+            auth.users.forEach(user => {
+                const row = `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.nickname}</td>
+                        <td>${user.email}</td>
+                        <td>
+                            <button onclick="makeAdmin(${user.id})">Сделать админом</button>
+                            <button onclick="deleteUser(${user.id})">Удалить</button>
+                        </td>
+                    </tr>
+                `;
+                adminTableBody.innerHTML += row;
+            });
+        }
+
+        // Удаление пользователя
+        window.deleteUser = function(id) {
+            auth.users = auth.users.filter(user => user.id !== id);
+            localStorage.setItem('users', JSON.stringify(auth.users));
+            updateAdminPanel();
+            showNotification('Пользователь удален!', 'success');
         };
-        localStorage.setItem('user', JSON.stringify(user));
-        this.checkAuth();
-        this.closeAllModals();
-        this.showNotification('Регистрация прошла успешно!', 'success');
-        form.reset();
-    }
-    static handleForgotPassword(event) {
-        event.preventDefault();
-        const email = document.getElementById('forgotForm').querySelector('input[type="email"]').value;
-        this.closeAllModals();
-        this.showNotification('Ссылка для восстановления пароля отправлена на ваш email.', 'success');
-    }
-    static logout() {
-        localStorage.removeItem('user');
-        this.checkAuth();
-        window.location.hash = 'main';
-    }
-    static showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        const closeButton = document.createElement('span');
-        closeButton.className = 'notification-close';
-        closeButton.textContent = '×';
-        closeButton.onclick = () => notification.remove();
-        notification.appendChild(closeButton);
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 5000);
-    }
-    static showAuthModal(type) {
-        this.closeAllModals();
-        const modal = document.getElementById(`${type}Modal`);
-        if (modal) {
-            modal.classList.add('active');
+
+        // Сделать пользователя админом
+        window.makeAdmin = function(id) {
+            const user = auth.users.find(u => u.id === id);
+            if (user) {
+                user.isAdmin = true;
+                localStorage.setItem('users', JSON.stringify(auth.users));
+                updateAdminPanel();
+                showNotification('Пользователь назначен администратором!', 'success');
+            } else {
+                showNotification('Пользователь не найден!', 'error');
+            }
+        };
+
+        // Добавление нового пользователя через админ панель
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('adminNickname').value;
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            if (auth.register(nickname, email, password)) {
+                showNotification('Пользователь добавлен!', 'success');
+                updateAdminPanel();
+                this.reset();
+            } else {
+                showNotification('Пользователь уже существует!', 'error');
+            }
+        });
+
+        // Уведомления
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <span class="notification-close" onclick="this.parentElement.remove()">×</span>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
         }
-    }
-    static closeAllModals() {
-        document.querySelectorAll('.auth-modal').forEach(modal => {
-            modal.classList.remove('active');
-        });
-    }
-    static setupEventListeners() {
-        const themeSwitcher = document.querySelector('.theme-switcher');
-        const authIcon = document.getElementById('authIcon');
-        const profileTab = document.getElementById('profileTab');
-        themeSwitcher.addEventListener('click', () => this.toggleTheme());
-        authIcon.addEventListener('click', () => this.showAuthModal('login'));
-        profileTab.addEventListener('click', () => {
-            window.location.hash = 'profile';
-            this.loadPage();
-        });
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const page = btn.dataset.page;
-                window.location.hash = page;
-                this.loadPage();
+
+        // Куки для входа
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
+
+        // Автоматический вход из куки
+        function autoLoginFromCookie() {
+            const email = getCookie('email');
+            const password = getCookie('password');
+            if (email && password && auth.login(email, password)) {
+                updateUI();
+                showNotification('Автоматический вход!', 'success');
+            }
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme();
+
+            // Загрузка последнего ID из localStorage
+            const lastUserId = localStorage.getItem('lastUserId');
+            if (lastUserId) {
+                User.nextId = parseInt(lastUserId, 10) + 1;
+            }
+
+            initInfiniteCarousel('manhwa-carousel', data.manhwa);
+            initInfiniteCarousel('manhua-carousel', data.manhua);
+            initInfiniteCarousel('manga-carousel', data.manga);
+            initInfiniteCarousel('reading-now-carousel', [
+                { title: 'One Piece', image: 'https://via.placeholder.com/200x300?text=One+Piece', rating: '9.5', likes: '100k' },
+                { title: 'Attack on Titan', image: 'https://via.placeholder.com/200x300?text=Attack+on+Titan', rating: '9.3', likes: '95k' },
+                { title: 'Naruto', image: 'https://via.placeholder.com/200x300?text=Naruto', rating: '9.2', likes: '90k' }
+            ]);
+            initRatings('weekly-top', data.catalog.slice(0, 10));
+            initRatings('monthly-top', data.catalog.slice(0, 20));
+            initCatalog();
+            updateUI();
+
+            // Добавление обновленных глав
+            const updatedChaptersList = document.getElementById('updated-chapters-list');
+            const recentChapters = [
+                { title: 'One Piece', chapter: 'Chapter 1000' },
+                { title: 'Attack on Titan', chapter: 'Chapter 139' },
+                { title: 'Naruto', chapter: 'Chapter 700' }
+            ];
+            recentChapters.forEach(chapter => {
+                const html = `
+                    <div class="chapter-item">
+                        <span>${chapter.title}</span>
+                        <span>${chapter.chapter}</span>
+                    </div>
+                `;
+                updatedChaptersList.innerHTML += html;
+            });
+
+            // Автоматический вход из куки
+            autoLoginFromCookie();
+
+            // Обновление таблицы пользователей в панели управления
+            if (auth.currentUser && auth.currentUser.isAdmin) {
+                document.getElementById('adminTab').style.display = 'block'; // Показываем админ панель
+                updateAdminPanel(); // Обновляем содержимое админ панели
+            }
+
+            // Сохранение последнего ID в localStorage
+            localStorage.setItem('lastUserId', User.nextId - 1);
+
+            // Обработчик нажатия на админ панель
+            document.getElementById('adminTab').addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('admin').classList.add('active');
+            });
+
+            // Обработчик нажатия на никнейм для перехода в личный кабинет
+            document.getElementById('userNickname').addEventListener('click', function() {
+                openProfile();
             });
         });
-        document.querySelector('#loginForm').addEventListener('submit', (event) => this.handleLogin(event));
-        document.querySelector('#registerForm').addEventListener('submit', (event) => this.handleRegister(event));
-        document.querySelector('#forgotForm').addEventListener('submit', (event) => this.handleForgotPassword(event));
-        document.querySelectorAll('.auth-modal .close-btn').forEach(closeButton => {
-            closeButton.addEventListener('click', () => this.closeAllModals());
+
+        // Функция для открытия личного кабинета
+        function openProfile() {
+            if (!auth.currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="profile"]').classList.add('active');
+            document.getElementById('profile').classList.add('active');
+            updateProfileUI();
+        }
+
+        // Обновление данных личного кабинета
+        function updateProfileUI() {
+            document.getElementById('profileNickname').textContent = `${auth.currentUser.nickname}#${auth.currentUser.id}`;
+            document.getElementById('profileRegistrationDate').textContent = auth.currentUser.registrationDate;
+            document.getElementById('profileChaptersRead').textContent = auth.currentUser.history.length;
+            document.getElementById('profileLikes').textContent = auth.currentUser.favorites.length;
+        }
+
+        // Обработка успешного входа
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            if (auth.login(email, password)) {
+                updateUI();
+                closeAllModals();
+                showNotification('Успешный вход!', 'success');
+                setCookie('email', email, 7);
+                setCookie('password', password, 7);
+                if (auth.currentUser.isAdmin) {
+                    document.getElementById('adminTab').style.display = 'block';
+                }
+            } else {
+                showNotification('Неверные данные!', 'error');
+            }
         });
-        document.querySelectorAll('.auth-links span').forEach(link => {
-            link.addEventListener('click', () => {
-                const targetModal = link.textContent.toLowerCase();
-                this.showAuthModal(targetModal);
+
+        // Обработка регистрации
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('nicknameInput').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            const confirm = this.querySelector('input[type="password"]:last-child').value;
+            if (password !== confirm) {
+                showNotification('Пароли не совпадают!', 'error');
+                return;
+            }
+            if (auth.register(nickname, email, password)) {
+                showNotification('Регистрация успешна!', 'success');
+                setCookie('email', email, 7);
+                setCookie('password', password, 7);
+                showAuthModal('login');
+            } else {
+                showNotification('Пользователь уже существует!', 'error');
+            }
+        });
+
+        // Обработка восстановления пароля
+        document.getElementById('forgotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Ссылка отправлена на email!', 'success');
+            closeAllModals();
+        });
+
+        // Добавление тайтла
+        document.getElementById('addMangaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('mangaTitle').value;
+            const image = document.getElementById('mangaImage').value;
+            const description = document.getElementById('mangaDescription').value;
+            const genres = document.getElementById('mangaGenres').value.split(',').map(g => g.trim());
+            const tags = document.getElementById('mangaTags').value.split(',').map(t => t.trim());
+
+            const newManga = {
+                title,
+                image,
+                description,
+                genres,
+                tags,
+                chapters: ['Chapter 1'],
+                rating: '0.0',
+                likes: '0'
+            };
+
+            data.catalog.push(newManga);
+            initCatalog();
+            document.getElementById('adminAddManga').classList.remove('active');
+            showNotification('Тайтл добавлен!', 'success');
+        });
+
+        // Открытие админ панели
+        document.getElementById('adminPanelContent').addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON') {
+                const action = event.target.textContent.trim();
+                if (action === 'Управление пользователями') {
+                    document.getElementById('adminPanel').classList.add('active');
+                } else if (action === 'Добавить тайтл') {
+                    document.getElementById('adminAddManga').classList.add('active');
+                }
+            }
+        });
+
+        // Обновление таблицы пользователей в админ панели
+        function updateAdminPanel() {
+            const adminTableBody = document.getElementById('adminTableBody');
+            adminTableBody.innerHTML = '';
+            auth.users.forEach(user => {
+                const row = `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.nickname}</td>
+                        <td>${user.email}</td>
+                        <td>
+                            <button onclick="makeAdmin(${user.id})">Сделать админом</button>
+                            <button onclick="deleteUser(${user.id})">Удалить</button>
+                        </td>
+                    </tr>
+                `;
+                adminTableBody.innerHTML += row;
+            });
+        }
+
+        // Удаление пользователя
+        window.deleteUser = function(id) {
+            auth.users = auth.users.filter(user => user.id !== id);
+            localStorage.setItem('users', JSON.stringify(auth.users));
+            updateAdminPanel();
+            showNotification('Пользователь удален!', 'success');
+        };
+
+        // Сделать пользователя админом
+        window.makeAdmin = function(id) {
+            const user = auth.users.find(u => u.id === id);
+            if (user) {
+                user.isAdmin = true;
+                localStorage.setItem('users', JSON.stringify(auth.users));
+                updateAdminPanel();
+                showNotification('Пользователь назначен администратором!', 'success');
+            } else {
+                showNotification('Пользователь не найден!', 'error');
+            }
+        };
+
+        // Добавление нового пользователя через админ панель
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('adminNickname').value;
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            if (auth.register(nickname, email, password)) {
+                showNotification('Пользователь добавлен!', 'success');
+                updateAdminPanel();
+                this.reset();
+            } else {
+                showNotification('Пользователь уже существует!', 'error');
+            }
+        });
+
+        // Уведомления
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <span class="notification-close" onclick="this.parentElement.remove()">×</span>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        // Куки для входа
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
+
+        // Автоматический вход из куки
+        function autoLoginFromCookie() {
+            const email = getCookie('email');
+            const password = getCookie('password');
+            if (email && password && auth.login(email, password)) {
+                updateUI();
+                showNotification('Автоматический вход!', 'success');
+            }
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme();
+
+            // Загрузка последнего ID из localStorage
+            const lastUserId = localStorage.getItem('lastUserId');
+            if (lastUserId) {
+                User.nextId = parseInt(lastUserId, 10) + 1;
+            }
+
+            initInfiniteCarousel('manhwa-carousel', data.manhwa);
+            initInfiniteCarousel('manhua-carousel', data.manhua);
+            initInfiniteCarousel('manga-carousel', data.manga);
+            initInfiniteCarousel('reading-now-carousel', [
+                { title: 'One Piece', image: 'https://via.placeholder.com/200x300?text=One+Piece', rating: '9.5', likes: '100k' },
+                { title: 'Attack on Titan', image: 'https://via.placeholder.com/200x300?text=Attack+on+Titan', rating: '9.3', likes: '95k' },
+                { title: 'Naruto', image: 'https://via.placeholder.com/200x300?text=Naruto', rating: '9.2', likes: '90k' }
+            ]);
+            initRatings('weekly-top', data.catalog.slice(0, 10));
+            initRatings('monthly-top', data.catalog.slice(0, 20));
+            initCatalog();
+            updateUI();
+
+            // Добавление обновленных глав
+            const updatedChaptersList = document.getElementById('updated-chapters-list');
+            const recentChapters = [
+                { title: 'One Piece', chapter: 'Chapter 1000' },
+                { title: 'Attack on Titan', chapter: 'Chapter 139' },
+                { title: 'Naruto', chapter: 'Chapter 700' }
+            ];
+            recentChapters.forEach(chapter => {
+                const html = `
+                    <div class="chapter-item">
+                        <span>${chapter.title}</span>
+                        <span>${chapter.chapter}</span>
+                    </div>
+                `;
+                updatedChaptersList.innerHTML += html;
+            });
+
+            // Автоматический вход из куки
+            autoLoginFromCookie();
+
+            // Обновление таблицы пользователей в панели управления
+            if (auth.currentUser && auth.currentUser.isAdmin) {
+                document.getElementById('adminTab').style.display = 'block'; // Показываем админ панель
+                updateAdminPanel(); // Обновляем содержимое админ панели
+            }
+
+            // Сохранение последнего ID в localStorage
+            localStorage.setItem('lastUserId', User.nextId - 1);
+
+            // Обработчик нажатия на админ панель
+            document.getElementById('adminTab').addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('admin').classList.add('active');
+            });
+
+            // Обработчик нажатия на никнейм для перехода в личный кабинет
+            document.getElementById('userNickname').addEventListener('click', function() {
+                openProfile();
             });
         });
-    }
-}
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-});
+
+        // Функция для открытия личного кабинета
+        function openProfile() {
+            if (!auth.currentUser) {
+                showAuthModal('login');
+                return;
+            }
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="profile"]').classList.add('active');
+            document.getElementById('profile').classList.add('active');
+            updateProfileUI();
+        }
+
+        // Обновление данных личного кабинета
+        function updateProfileUI() {
+            document.getElementById('profileNickname').textContent = `${auth.currentUser.nickname}#${auth.currentUser.id}`;
+            document.getElementById('profileRegistrationDate').textContent = auth.currentUser.registrationDate;
+            document.getElementById('profileChaptersRead').textContent = auth.currentUser.history.length;
+            document.getElementById('profileLikes').textContent = auth.currentUser.favorites.length;
+        }
+
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light');
+            body.classList.toggle('dark');
+            const themeIcon = document.querySelector('.theme-icon');
+            themeIcon.textContent = body.classList.contains('light') ? '☀️' : '🌙';
+            localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+        }
+
+        // Применяем сохранённую тему из localStorage
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light');
+                document.querySelector('.theme-icon').textContent = '☀️';
+            } else {
+                document.body.classList.add('dark');
+                document.querySelector('.theme-icon').textContent = '🌙';
+            }
+        }
     </script>
 </body>
 </html>
